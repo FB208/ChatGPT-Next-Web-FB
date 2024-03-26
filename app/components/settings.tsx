@@ -868,6 +868,25 @@ export function Settings() {
 
         <List>
           <ListItem
+            title={`Midjourney ${Locale.Midjourney.ImageAgent}`}
+            subTitle={Locale.Midjourney.ImageAgentOpenTip}
+          >
+            <input
+              type="checkbox"
+              checked={config.useMjImgSelfProxy}
+              onChange={(e) =>
+                updateConfig(
+                  (config) =>
+                    (config.useMjImgSelfProxy = e.currentTarget.checked),
+                )
+              }
+            ></input>
+          </ListItem>
+        </List>
+
+
+        <List>
+          <ListItem
             title={Locale.Settings.Prompt.Disable.Title}
             subTitle={Locale.Settings.Prompt.Disable.SubTitle}
           >

@@ -289,6 +289,15 @@ export const DEFAULT_MODELS = [
       providerType: "google",
     },
   },
+  {
+    name: "midjourney",
+    available: true,
+    provider: {
+      id: "midjourney",
+      providerName: "Midjourney",
+      providerType: "midjourney",
+    },
+  },
 ] as const;
 
 export const CHAT_PAGE_SIZE = 15;

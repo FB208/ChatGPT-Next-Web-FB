@@ -5,7 +5,7 @@ import {
   ModelProvider,
   ServiceProvider,
 } from "../constant";
-import { ChatMessage, ModelType, useAccessStore, useChatStore } from "../store";
+import { ChatMessage, ModelType, useAccessStore, useChatStore,useAppConfig } from "../store";
 import { ChatGPTApi } from "./platforms/openai";
 import { GeminiProApi } from "./platforms/google";
 export const ROLES = ["system", "user", "assistant"] as const;
@@ -182,4 +182,19 @@ export function getHeaders() {
   }
 
   return headers;
+}
+
+export function useGetMidjourneySelfProxyUrl(url: string) {
+  const config = useAppConfig.getState();
+  if (config.useMjImgSelfProxy) {
+    const accessStore = useAccessStore.getState();
+    url = url.replace("https://cdn.discordapp.com", "/cdn/discordapp");
+    if (accessStore.accessCode) {
+      url +=
+        (url.includes("?") ? "&" : "?") +
+        "Authorization=" +
+        accessStore.accessCode;
+    }
+  }
+  return url;
 }
