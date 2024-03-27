@@ -14,7 +14,7 @@ import {
   SUMMARIZE_MODEL,
   GEMINI_SUMMARIZE_MODEL,
 } from "../constant";
-import { ClientApi, RequestMessage, MultimodalContent,    useGetMidjourneySelfProxyUrl, } from "../client/api";
+import { ClientApi, RequestMessage, MultimodalContent, getHeaders,   useGetMidjourneySelfProxyUrl, } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { estimateTokenLength } from "../utils/token";
@@ -59,6 +59,7 @@ export interface ChatSession {
 
   mask: Mask;
 }
+const ChatFetchTaskPool: Record<string, any> = {};
 
 export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
 export const BOT_HELLO: ChatMessage = createMessage({
@@ -347,11 +348,13 @@ export const useChatStore = createPersistStore(
           role: "assistant",
           streaming: true,
           model: modelConfig.model,
+          attr: {},
         });
 
         // get recent messages
         const recentMessages = get().getMessagesWithMemory();
         const sendMessages = recentMessages.concat(userMessage);
+        const sessionId = get().currentSession().id;
         const messageIndex = get().currentSession().messages.length + 1;
 
         // save user's and bot's message
