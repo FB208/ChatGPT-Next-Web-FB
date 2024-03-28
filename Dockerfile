@@ -18,11 +18,7 @@ RUN apk update && apk add --no-cache git
 ENV OPENAI_API_KEY=""
 ENV GOOGLE_API_KEY=""
 ENV CODE=""
-ENV MJ_SERVER_ID=""
-ENV MJ_CHANNEL_ID=""
-ENV MJ_USER_TOKEN=""
-ENV MJ_DISCORD_WSS_PROXY=""
-ENV MJ_DISCORD_CDN_PROXY=""
+
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -39,6 +35,15 @@ ENV PROXY_URL=""
 ENV OPENAI_API_KEY=""
 ENV GOOGLE_API_KEY=""
 ENV CODE=""
+ENV MJ_SERVER_ID=""
+ENV MJ_CHANNEL_ID=""
+ENV MJ_USER_TOKEN=""
+ENV MJ_DISCORD_WSS_PROXY=""
+ENV MJ_DISCORD_CDN_PROXY=""
+
+
+RUN mkdir -p /app/public  
+
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./

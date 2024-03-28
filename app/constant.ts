@@ -72,6 +72,7 @@ export enum ServiceProvider {
 export enum ModelProvider {
   GPT = "GPT",
   GeminiPro = "GeminiPro",
+  Midjourney = "Midjourney",
 }
 
 export const OpenaiPath = {

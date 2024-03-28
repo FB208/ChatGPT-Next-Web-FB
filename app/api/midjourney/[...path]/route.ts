@@ -1,11 +1,13 @@
+import { Midjourney } from 'midjourney';
 import {NextRequest, NextResponse} from "next/server";
 import {MidjourneyApi} from "@/app/core/midjourney";
 import {auth} from "@/app/api/auth";
+import {  ModelProvider } from "@/app/constant";
 
 const api = new MidjourneyApi()
 
 async function handle(req: NextRequest, {params}: { params: { path: string[] } }) {
-    const authResult = auth(req);
+    const authResult = auth(req,ModelProvider.Midjourney);
     if (authResult.error) {
         return NextResponse.json(authResult, {
             status: 401,

@@ -338,8 +338,10 @@ function ClearContextDivider() {
 
 function ChatAction(props: {
   text: string;
-  icon: JSX.Element;
+  icon?: JSX.Element;
+  innerNode?: JSX.Element;
   onClick: () => void;
+  style?: React.CSSProperties;
 }) {
   const iconRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -366,21 +368,27 @@ function ChatAction(props: {
         props.onClick();
         setTimeout(updateWidth, 1);
       }}
-      onMouseEnter={updateWidth}
-      onTouchStart={updateWidth}
+      onMouseEnter={props.icon ? updateWidth : undefined}
+      onTouchStart={props.icon ? updateWidth : undefined}
       style={
-        {
-          "--icon-width": `${width.icon}px`,
-          "--full-width": `${width.full}px`,
-        } as React.CSSProperties
+        props.icon
+          ? ({
+            "--icon-width": `${width.icon}px`,
+            "--full-width": `${width.full}px`,
+            ...props.style,
+          } as React.CSSProperties)
+          : props.style
       }
     >
-      <div ref={iconRef} className={styles["icon"]}>
-        {props.icon}
-      </div>
+      {props.icon ? (
+        <div ref={iconRef} className={styles["icon"]}>
+          {props.icon}
+        </div>
+      ) : null}
       <div className={styles["text"]} ref={textRef}>
         {props.text}
       </div>
+      {props.innerNode}
     </div>
   );
 }
@@ -668,9 +676,9 @@ function _Chat() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isScrolledToBottom = scrollRef?.current
     ? Math.abs(
-        scrollRef.current.scrollHeight -
-          (scrollRef.current.scrollTop + scrollRef.current.clientHeight),
-      ) <= 1
+      scrollRef.current.scrollHeight -
+      (scrollRef.current.scrollTop + scrollRef.current.clientHeight),
+    ) <= 1
     : false;
   const { setAutoScroll, scrollDomToBottom } = useScrollToBottom(
     scrollRef,
@@ -752,12 +760,12 @@ function _Chat() {
     userInput = userInput.trim();
     if (useImages.length > 0) {
       if (mjImageMode === "IMAGINE" && userInput == "") {
-          alert(Locale.Midjourney.NeedInputUseImgPrompt);
-          return;
+        alert(Locale.Midjourney.NeedInputUseImgPrompt);
+        return;
       }
-  } else {
+    } else {
       if (userInput == "") return;
-  }
+    }
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
       setUserInput("");
@@ -772,7 +780,7 @@ function _Chat() {
         mjImageMode,
         setAutoScroll,
         botMsg: extAttr?.botMsg,
-    })
+      })
       .then(() => setIsLoading(false));
     setAttachImages([]);
     localStorage.setItem(LAST_INPUT_KEY, userInput);
@@ -964,27 +972,27 @@ function _Chat() {
       .concat(
         isLoading
           ? [
-              {
-                ...createMessage({
-                  role: "assistant",
-                  content: "……",
-                }),
-                preview: true,
-              },
-            ]
+            {
+              ...createMessage({
+                role: "assistant",
+                content: "……",
+              }),
+              preview: true,
+            },
+          ]
           : [],
       )
       .concat(
         userInput.length > 0 && config.sendPreviewBubble
           ? [
-              {
-                ...createMessage({
-                  role: "user",
-                  content: userInput,
-                }),
-                preview: true,
-              },
-            ]
+            {
+              ...createMessage({
+                role: "user",
+                content: userInput,
+              }),
+              preview: true,
+            },
+          ]
           : [],
       );
   }, [
@@ -1079,7 +1087,7 @@ function _Chat() {
         if (payload.key || payload.url) {
           showConfirm(
             Locale.URLCommand.Settings +
-              `\n${JSON.stringify(payload, null, 4)}`,
+            `\n${JSON.stringify(payload, null, 4)}`,
           ).then((res) => {
             if (!res) return;
             if (payload.key) {
@@ -1117,11 +1125,11 @@ function _Chat() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   const handlePaste = useCallback(
     async (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
       const currentModel = chatStore.currentSession().mask.modelConfig.model;
-      if(!isVisionModel(currentModel)){return;}
+      if (!isVisionModel(currentModel)) { return; }
       const items = (event.clipboardData || window.clipboardData).items;
       for (const item of items) {
         if (item.kind === "file" && item.type.startsWith("image/")) {
@@ -1453,38 +1461,38 @@ function _Chat() {
                     )}
                   </div>
                   {!isUser &&
-                                        message.model == "midjourney" &&
-                                        message.attr?.finished &&
-                                        message.attr?.taskId &&
-                                        message.attr?.options?.length && (
-                                            <div
-                                                className={[
-                                                    styles["chat-message-actions"],
-                                                    styles["column-flex"],
-                                                ].join(" ")}
-                                            >
-                                                <div
-                                                    style={{marginTop: "6px"}}
-                                                    className={styles["chat-input-actions"]}
-                                                >
-                                                    {message.attr?.options.map((item: any) => (
-                                                        <ChatAction
-                                                            style={{marginBottom: "6px"}}
-                                                            key={message.attr.taskId+item.custom}
-                                                            text={item.label}
-                                                            onClick={() =>
-                                                                doSubmit(
-                                                                    `/mj CUSTOM::${message.attr.taskId}::${item.custom}`,
-                                                                    {
-                                                                        botMsg: message.attr,
-                                                                    }
-                                                                )
-                                                            }
-                                                        />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
+                    message.model == "midjourney" &&
+                    message.attr?.finished &&
+                    message.attr?.taskId &&
+                    message.attr?.options?.length && (
+                      <div
+                        className={[
+                          styles["chat-message-actions"],
+                          styles["column-flex"],
+                        ].join(" ")}
+                      >
+                        <div
+                          style={{ marginTop: "6px" }}
+                          className={styles["chat-input-actions"]}
+                        >
+                          {message.attr?.options.map((item: any) => (
+                            <ChatAction
+                              style={{ marginBottom: "6px" }}
+                              key={message.attr.taskId + item.custom}
+                              text={item.label}
+                              onClick={() =>
+                                doSubmit(
+                                  `/mj CUSTOM::${message.attr.taskId}::${item.custom}`,
+                                  {
+                                    botMsg: message.attr,
+                                  }
+                                )
+                              }
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   <div className={styles["chat-message-action-date"]}>
                     {isContext
                       ? Locale.Chat.IsContext
@@ -1520,58 +1528,50 @@ function _Chat() {
             setUserInput("/");
             onSearch("");
           }}
-          imageSelected={(img: any) => {
-            if (useImages.length >= 5) {
-                alert(Locale.Midjourney.SelectImgMax(5));
-                return;
-            }
-            setUseImages([...useImages, img]);
-        }}
         />
-                       {useImages.length > 0 && (
-                    <div className={styles["chat-select-images"]}>
-                        {useImages.map((img: any, i) => (
-                            <img
-                                src={img.base64}
-                                key={i}
-                                onClick={() => {
-                                    setUseImages(useImages.filter((_, ii) => ii != i));
-                                }}
-                                title={img.filename}
-                                alt={img.filename}
-                            />
-                        ))}
-                        <div style={{fontSize: "12px", marginBottom: "5px"}}>
-                            {[
-                                {name: Locale.Midjourney.ModeImagineUseImg, value: "IMAGINE"},
-                                {name: Locale.Midjourney.ModeBlend, value: "BLEND"},
-                                {name: Locale.Midjourney.ModeDescribe, value: "DESCRIBE"},
-                            ].map((item, i) => (
-                                <label key={i}>
-                                    <input
-                                        type="radio"
-                                        name="mj-img-mode"
-                                        checked={mjImageMode == item.value}
-                                        value={item.value}
-                                        onChange={(e) => {
-                                            setMjImageMode(e.target.value);
-                                        }}
-                                    />
-                                    <span>{item.name}</span>
-                                </label>
-                            ))}
-                        </div>
-                        <div style={{fontSize: "12px", marginBottom: "10px"}}>
-                            <small>{Locale.Midjourney.HasImgTip}</small>
-                        </div>
-                    </div>
-                )}
+        {useImages.length > 0 && (
+          <div className={styles["chat-select-images"]}>
+            {useImages.map((img: any, i) => (
+              <img
+                src={img.base64}
+                key={i}
+                onClick={() => {
+                  setUseImages(useImages.filter((_, ii) => ii != i));
+                }}
+                title={img.filename}
+                alt={img.filename}
+              />
+            ))}
+            <div style={{ fontSize: "12px", marginBottom: "5px" }}>
+              {[
+                { name: Locale.Midjourney.ModeImagineUseImg, value: "IMAGINE" },
+                { name: Locale.Midjourney.ModeBlend, value: "BLEND" },
+                { name: Locale.Midjourney.ModeDescribe, value: "DESCRIBE" },
+              ].map((item, i) => (
+                <label key={i}>
+                  <input
+                    type="radio"
+                    name="mj-img-mode"
+                    checked={mjImageMode == item.value}
+                    value={item.value}
+                    onChange={(e) => {
+                      setMjImageMode(e.target.value);
+                    }}
+                  />
+                  <span>{item.name}</span>
+                </label>
+              ))}
+            </div>
+            <div style={{ fontSize: "12px", marginBottom: "10px" }}>
+              <small>{Locale.Midjourney.HasImgTip}</small>
+            </div>
+          </div>
+        )}
         <label
-          className={`${styles["chat-input-panel-inner"]} ${
-            attachImages.length != 0
-              ? styles["chat-input-panel-inner-attach"]
-              : ""
-          }`}
+          className={`${styles["chat-input-panel-inner"]} ${attachImages.length != 0
+            ? styles["chat-input-panel-inner-attach"]
+            : ""
+            }`}
           htmlFor="chat-input"
         >
 
@@ -1581,9 +1581,9 @@ function _Chat() {
             className={styles["chat-input"]}
             placeholder={
               useImages.length > 0 && mjImageMode != "IMAGINE"
-                  ? Locale.Midjourney.InputDisabled
-                  : Locale.Chat.Input(submitKey)
-          }
+                ? Locale.Midjourney.InputDisabled
+                : Locale.Chat.Input(submitKey)
+            }
             onInput={(e) => onInput(e.currentTarget.value)}
             value={userInput}
             onKeyDown={onInputKeyDown}
