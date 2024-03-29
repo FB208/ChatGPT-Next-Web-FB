@@ -37,7 +37,7 @@ export function AuthPage() {
       </div>
 
       <div className={styles["auth-title"]}>{Locale.Auth.Title}</div>
-      <div className={styles["auth-tips"]}>{Locale.Auth.Tips}</div>
+      {/* <div className={styles["auth-tips"]}>{Locale.Auth.Tips}</div> */}
 
       <input
         className={styles["auth-input"]}
@@ -79,18 +79,30 @@ export function AuthPage() {
       ) : null}
 
       <div className={styles["auth-actions"]}>
-        <IconButton
-          text={Locale.Auth.Confirm}
-          type="primary"
-          onClick={goChat}
-        />
-        <IconButton
+      <IconButton
           text={Locale.Auth.Later}
           onClick={() => {
             resetAccessCode();
             goHome();
           }}
         />
+        <IconButton
+          text={Locale.Auth.Confirm}
+          type="primary"
+          onClick={goChat}
+        />
+
+        </div>
+   
+      <div className={styles["auth-markme"]}>
+      <hr />
+        <span>
+        微信关注【生产力Mark】
+        <br/>
+        发送【chat】获取最新密码
+        <br/>
+        </span>
+        <img src="https://qiniu.bigdudu.cn/qrcode_for_gh_0165593ea5a8_344.jpg" className={styles["auth-qrcode"]}></img>
       </div>
     </div>
   );
