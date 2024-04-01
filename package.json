@@ -1,6 +1,7 @@
 {
   "name": "mark-ai",
-  "version": "4.0.2",
+  "version": "0.0.0", 
+  "_version":"现在版本号在src-aturi/tauri.config.json中配置",
   "private": false,
   "license": "mit",
   "scripts": {
