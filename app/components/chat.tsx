@@ -30,7 +30,7 @@ import EditIcon from "../icons/rename.svg";
 import ConfirmIcon from "../icons/confirm.svg";
 import CancelIcon from "../icons/cancel.svg";
 import ImageIcon from "../icons/image.svg";
-
+import UploadIcon from "../icons/upload.svg";
 import LightIcon from "../icons/light.svg";
 import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
@@ -366,7 +366,7 @@ function ChatAction(props: {
       className={`${styles["chat-input-action"]} clickable`}
       onClick={() => {
         props.onClick();
-        setTimeout(updateWidth, 1);
+        iconRef ? setTimeout(updateWidth, 1) : undefined;
       }}
       onMouseEnter={props.icon ? updateWidth : undefined}
       onTouchStart={props.icon ? updateWidth : undefined}
@@ -385,7 +385,7 @@ function ChatAction(props: {
           {props.icon}
         </div>
       ) : null}
-      <div className={styles["text"]} ref={textRef}>
+            <div className={props.icon ? styles["text"] : undefined} ref={textRef}>
         {props.text}
       </div>
       {props.innerNode}
@@ -398,7 +398,6 @@ function useScrollToBottom(
   detach: boolean = false,
 ) {
   // for auto-scroll
-
   const [autoScroll, setAutoScroll] = useState(true);
   function scrollDomToBottom() {
     const dom = scrollRef.current;
@@ -432,6 +431,7 @@ export function ChatActions(props: {
   showPromptModal: () => void;
   scrollToBottom: () => void;
   showPromptHints: () => void;
+  imageSelected: (img: any) => void;
   hitBottom: boolean;
   uploading: boolean;
 }) {
@@ -452,6 +452,26 @@ export function ChatActions(props: {
   // stop all responses
   const couldStop = ChatControllerPool.hasPending();
   const stopAll = () => ChatControllerPool.stopAll();
+
+  function selectImage() {
+    document.getElementById("chat-image-file-select-upload")?.click();
+}
+
+const onImageSelected = (e: any) => {
+    const file = e.target.files[0];
+    const filename = file.name;
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        const base64 = reader.result;
+        props.imageSelected({
+            filename,
+            base64,
+        });
+    };
+    e.target.value = null;
+};
+
 
   // switch model
   const currentModel = chatStore.currentSession().mask.modelConfig.model;
@@ -564,6 +584,21 @@ export function ChatActions(props: {
         text={currentModel}
         icon={<RobotIcon />}
       />
+
+<ChatAction
+                onClick={selectImage}
+                text="选择图片"
+                icon={<UploadIcon/>}
+                innerNode={
+                    <input
+                        type="file"
+                        accept=".png,.jpg,.webp,.jpeg"
+                        id="chat-image-file-select-upload"
+                        style={{display: "none"}}
+                        onChange={onImageSelected}
+                    />
+                }
+            />
 
       {showModelSelector && (
         <Selector
@@ -932,7 +967,16 @@ function _Chat() {
     setIsLoading(true);
     const textContent = getMessageTextContent(userMessage);
     const images = getMessageImages(userMessage);
-    chatStore.onUserInput(textContent, images).then(() => setIsLoading(false));
+    chatStore.onUserInput(textContent, images).then(() => {
+      localStorage.setItem(LAST_INPUT_KEY, userInput);
+                setUserInput("");
+                setUseImages([]);
+                setMjImageMode("BLEND");
+                setPromptHints([]);
+                if (!isMobileScreen) inputRef.current?.focus();
+                setAutoScroll(true);
+      setIsLoading(false)
+    });
     inputRef.current?.focus();
   };
 
@@ -1528,6 +1572,13 @@ function _Chat() {
             setUserInput("/");
             onSearch("");
           }}
+          imageSelected={(img: any) => {
+            if (useImages.length >= 5) {
+                alert(Locale.Midjourney.SelectImgMax(5));
+                return;
+            }
+            setUseImages([...useImages, img]);
+        }}
         />
         {useImages.length > 0 && (
           <div className={styles["chat-select-images"]}>
