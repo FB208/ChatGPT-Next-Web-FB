@@ -178,8 +178,42 @@ const anthropicModels = [
   "claude-3-haiku-20240307",
 ];
 
+const openrouterModels=[
+  "google/gemma-7b-it:free",
+  "google/gemini-pro",
+  "openai/gpt-3.5-turbo",
+  "mistralai/mixtral-8x22b"
+]
+
 export const DEFAULT_MODELS = [
-  ...openaiModels.map((name) => ({
+  // ...openaiModels.map((name) => ({
+  //   name,
+  //   available: true,
+  //   provider: {
+  //     id: "openai",
+  //     providerName: "OpenAI",
+  //     providerType: "openai",
+  //   },
+  // })),
+  // ...googleModels.map((name) => ({
+  //   name,
+  //   available: true,
+  //   provider: {
+  //     id: "google",
+  //     providerName: "Google",
+  //     providerType: "google",
+  //   },
+  // })),
+  // ...anthropicModels.map((name) => ({
+  //   name,
+  //   available: true,
+  //   provider: {
+  //     id: "anthropic",
+  //     providerName: "Anthropic",
+  //     providerType: "anthropic",
+  //   },
+  // })),
+  ...openrouterModels.map((name) => ({
     name,
     available: true,
     provider: {
@@ -188,25 +222,6 @@ export const DEFAULT_MODELS = [
       providerType: "openai",
     },
   })),
-  ...googleModels.map((name) => ({
-    name,
-    available: true,
-    provider: {
-      id: "google",
-      providerName: "Google",
-      providerType: "google",
-    },
-  })),
-  ...anthropicModels.map((name) => ({
-    name,
-    available: true,
-    provider: {
-      id: "anthropic",
-      providerName: "Anthropic",
-      providerType: "anthropic",
-    },
-
-})),
   {
     name: "midjourney",
     available: true,
