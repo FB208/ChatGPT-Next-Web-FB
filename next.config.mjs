@@ -70,6 +70,10 @@ if (mode !== "export") {
         destination: "https://api.openai.com/v1/:path*",
       },
       {
+        source: "/cdn/discordapp/:path*",
+        destination: "https://cdn.discordapp.com/:path*",
+      },
+      {
         source: "/api/proxy/google/:path*",
         destination: "https://generativelanguage.googleapis.com/:path*",
       },
