@@ -171,7 +171,9 @@ const openrouterModels=[
   "google/gemma-7b-it:free",
   "google/gemini-pro",
   "openai/gpt-3.5-turbo",
+  "openai/gpt-4-turbo-preview",
   "mistralai/mixtral-8x22b"
+
 ]
 
 export const DEFAULT_MODELS = [
