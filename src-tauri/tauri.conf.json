@@ -9,7 +9,7 @@
   },
   "package": {
     "productName": "MarkAI",
-    "version": "4.2.30"
+    "version": "4.3.9"
   },
   "tauri": {
     "allowlist": {
