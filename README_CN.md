@@ -1,3 +1,7 @@
+# 备注
+开放gpt4接口
+openai/gpt-4-turbo-preview=gpt-4,
+
 <div align="center">
 <img src="./docs/images/icon.svg" alt="预览"/>
 
