@@ -1,6 +1,7 @@
 # 备注
 开放gpt4接口
 openai/gpt-4-turbo-preview=gpt-4,
+- CUSTOM_MODELS=google/gemma-7b-it:free=google-gemma,google/gemini-pro=google-gemini-pro,openai/gpt-3.5-turbo=gpt-3.5-turbo,mistralai/mixtral-8x22b=mistral-8x22b,-openai/gpt-4-turbo-preview=gpt-4
 
 <div align="center">
 <img src="./docs/images/icon.svg" alt="预览"/>

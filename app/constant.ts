@@ -11,6 +11,7 @@ export const RUNTIME_CONFIG_DOM = "danger-runtime-config";
 export const DEFAULT_API_HOST = "https://api.nextchat.dev";
 export const OPENAI_BASE_URL = "https://api.openai.com";
 export const ANTHROPIC_BASE_URL = "https://api.anthropic.com";
+export const DEEPSEEK_BASE_URL = "https://api.deepseek.com";
 
 export const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/";
 
@@ -123,7 +124,8 @@ Latex inline: \\(x^2\\)
 Latex block: $$e=mc^2$$
 `;
 
-export const SUMMARIZE_MODEL = "gpt-3.5-turbo";
+//总结模型
+export const SUMMARIZE_MODEL = "deepseek-chat";
 export const GEMINI_SUMMARIZE_MODEL = "gemini-pro";
 
 export const KnowledgeCutOffDate: Record<string, string> = {
@@ -176,6 +178,11 @@ const openrouterModels=[
 
 ]
 
+const deepseekModels=[
+  "deepseek-chat",
+  "deepseek-coder"
+
+]
 export const DEFAULT_MODELS = [
   // ...openaiModels.map((name) => ({
   //   name,
@@ -204,7 +211,16 @@ export const DEFAULT_MODELS = [
   //     providerType: "anthropic",
   //   },
   // })),
-  ...openrouterModels.map((name) => ({
+  // ...openrouterModels.map((name) => ({
+  //   name,
+  //   available: true,
+  //   provider: {
+  //     id: "openai",
+  //     providerName: "OpenAI",
+  //     providerType: "openai",
+  //   },
+  // })),
+  ...deepseekModels.map((name) => ({
     name,
     available: true,
     provider: {

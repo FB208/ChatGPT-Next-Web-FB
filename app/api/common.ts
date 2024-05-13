@@ -30,6 +30,7 @@ export async function requestOpenai(req: NextRequest) {
     "",
   );
 
+
   let baseUrl =
     serverConfig.azureUrl || serverConfig.baseUrl || OPENAI_BASE_URL;
 
