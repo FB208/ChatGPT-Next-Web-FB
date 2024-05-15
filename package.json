@@ -1,7 +1,7 @@
 {
   "name": "mark-ai",
-  "version": "0.0.0", 
-  "_version":"现在版本号在src-aturi/tauri.config.json中配置",
+  "version": "0.0.0",
+  "_version": "现在版本号在src-aturi/tauri.config.json中配置",
   "private": false,
   "license": "mit",
   "scripts": {
@@ -27,6 +27,7 @@
     "fuse.js": "^7.0.0",
     "html-to-image": "^1.11.11",
     "mermaid": "^10.6.1",
+    "midjourney": "^4.3.17",
     "nanoid": "^5.0.3",
     "next": "^14.1.1",
     "node-fetch": "^3.3.1",
@@ -43,8 +44,7 @@
     "spark-md5": "^3.0.2",
     "use-debounce": "^9.0.4",
     "yarn": "^1.22.22",
-    "zustand": "^4.3.8",
-    "midjourney": "^4.3.17"
+    "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@tauri-apps/cli": "1.5.11",

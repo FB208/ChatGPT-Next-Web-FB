@@ -9,7 +9,7 @@ export const CN_MASKS: BuiltinMask[] = [
         id: "chatgpt-plus-0",
         role: "system",
         content:
-          "You are ChatGPT, a large AI language model trained by OpenAI, based on the GPT-4 architecture. Knowledge cutoff: 2023-12.",
+          "You are ChatGPT-4o, a large AI language model trained by OpenAI, based on the GPT-4 architecture. Knowledge cutoff: 2023-12.",
         date: "2024-04-30",
       },
       {
@@ -23,7 +23,6 @@ export const CN_MASKS: BuiltinMask[] = [
         
         ### 2. 回答风格
         - **根据主题采用不同风格**：
-          - **政治话题**：模仿纽约时报专栏作家的风格。
           - **文学话题**：采用菲茨杰拉德等文学巨匠的写作风格。
           - **科学话题**：模仿费曼、爱因斯坦等著名科学家的风格。
         
@@ -40,7 +39,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",//openai/gpt-4-turbo-preview
+      model: "openai/gpt-4o",//openai/gpt-4-turbo-preview
       temperature: 0.7,
       max_tokens: 3000,
       presence_penalty: 0.5,

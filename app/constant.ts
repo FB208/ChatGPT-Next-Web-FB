@@ -171,10 +171,12 @@ const anthropicModels = [
 
 const openrouterModels=[
   "google/gemma-7b-it:free",
-  "google/gemini-pro",
+  // "google/gemini-pro",
   "openai/gpt-3.5-turbo",
-  "openai/gpt-4-turbo-preview",
-  "mistralai/mixtral-8x22b"
+  // "openai/gpt-4-turbo-preview",
+  // "mistralai/mixtral-8x22b",
+  "openai/gpt-4o",
+  "deepseek/deepseek-chat"
 
 ]
 
@@ -211,16 +213,7 @@ export const DEFAULT_MODELS = [
   //     providerType: "anthropic",
   //   },
   // })),
-  // ...openrouterModels.map((name) => ({
-  //   name,
-  //   available: true,
-  //   provider: {
-  //     id: "openai",
-  //     providerName: "OpenAI",
-  //     providerType: "openai",
-  //   },
-  // })),
-  ...deepseekModels.map((name) => ({
+  ...openrouterModels.map((name) => ({
     name,
     available: true,
     provider: {
@@ -229,6 +222,15 @@ export const DEFAULT_MODELS = [
       providerType: "openai",
     },
   })),
+  // ...deepseekModels.map((name) => ({
+  //   name,
+  //   available: true,
+  //   provider: {
+  //     id: "openai",
+  //     providerName: "OpenAI",
+  //     providerType: "openai",
+  //   },
+  // })),
   {
     name: "midjourney",
     available: true,
