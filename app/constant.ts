@@ -125,7 +125,7 @@ Latex block: $$e=mc^2$$
 `;
 
 //总结模型
-export const SUMMARIZE_MODEL = "deepseek-chat";
+export const SUMMARIZE_MODEL = "google/gemma-7b-it:free";
 export const GEMINI_SUMMARIZE_MODEL = "gemini-pro";
 
 export const KnowledgeCutOffDate: Record<string, string> = {
@@ -175,7 +175,7 @@ const openrouterModels=[
   "openai/gpt-3.5-turbo",
   // "openai/gpt-4-turbo-preview",
   // "mistralai/mixtral-8x22b",
-  "openai/gpt-4o",
+  // "openai/gpt-4o",
   "deepseek/deepseek-chat"
 
 ]

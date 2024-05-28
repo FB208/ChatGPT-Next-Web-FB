@@ -39,7 +39,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "openai/gpt-4o",//openai/gpt-4-turbo-preview
+      model: "openai/gpt-3.5-turbo",//openai/gpt-4-turbo-preview
       temperature: 0.7,
       max_tokens: 3000,
       presence_penalty: 0.5,
@@ -85,7 +85,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -111,7 +111,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -137,7 +137,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -163,7 +163,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -189,7 +189,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -215,7 +215,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -241,7 +241,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -267,7 +267,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -299,7 +299,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -325,7 +325,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -358,7 +358,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -391,7 +391,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -449,7 +449,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 1,
       max_tokens: 2000,
       presence_penalty: 0,
@@ -481,7 +481,7 @@ export const CN_MASKS: BuiltinMask[] = [
       },
     ],
     modelConfig: {
-      model: "deepseek-chat",
+      model: "openai/gpt-3.5-turbo",
       temperature: 0.5,
       max_tokens: 2000,
       presence_penalty: 0,
