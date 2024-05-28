@@ -73,6 +73,14 @@ if (mode !== "export") {
         source: "/cdn/discordapp/:path*",
         destination: "https://cdn.discordapp.com/:path*",
       },
+      // {
+      //   source: "/api/midjourney/task/submit",
+      //   destination: "https://mjapi.markup.com.cn/api/midjourney/task/submit"
+      // },
+      {
+        source: "/api/midjourney/:path*",
+        destination: "https://mjapi.markup.com.cn/api/midjourney/:path*"
+      },
       {
         source: "/api/proxy/google/:path*",
         destination: "https://generativelanguage.googleapis.com/:path*",

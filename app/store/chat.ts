@@ -337,37 +337,17 @@ export const useChatStore = createPersistStore(
         const userContent = fillTemplateWith(content, modelConfig);
         console.log("[User Input] after template: ", userContent);
 
-        let mContent: string | MultimodalContent[] = userContent;
-
-        if (attachImages && attachImages.length > 0) {
-          mContent = [
-            {
-              type: "text",
-              text: userContent,
-            },
-          ];
-          mContent = mContent.concat(
-            attachImages.map((url) => {
-              return {
-                type: "image_url",
-                image_url: {
-                  url: url,
-                },
-              };
-            }),
-          );
-        }
-        let userMessage: ChatMessage = createMessage({
+        const userMessage: ChatMessage = createMessage({
           role: "user",
-          content: mContent,
-        });
+          content: userContent,
+      });
 
-        const botMessage: ChatMessage = createMessage({
+      const botMessage: ChatMessage = createMessage({
           role: "assistant",
           streaming: true,
           model: modelConfig.model,
           attr: {},
-        });
+      });
 
         // get recent messages
         const recentMessages = get().getMessagesWithMemory();
@@ -378,14 +358,14 @@ export const useChatStore = createPersistStore(
         // save user's and bot's message
         get().updateCurrentSession((session) => {
           const savedUserMessage = {
-            ...userMessage,
-            content: mContent,
+              ...userMessage,
+              content,
           };
           session.messages = session.messages.concat([
-            savedUserMessage,
-            botMessage,
+              savedUserMessage,
+              botMessage,
           ]);
-        });
+      });
         if (
           content.toLowerCase().startsWith("/mj") ||
           content.toLowerCase().startsWith("/MJ")
@@ -804,14 +784,14 @@ export const useChatStore = createPersistStore(
       },
       fetchMidjourneyStatus(botMessage: ChatMessage, extAttr?: any) {
         const taskId = botMessage?.attr?.taskId;
-        // console.log('fetchMidjourneyStatus', botMessage, extAttr)
+         console.log('fetchMidjourneyStatus', botMessage, extAttr)
         if (
             !taskId ||
             ["SUCCESS", "FAILURE"].includes(botMessage?.attr?.status) ||
             ChatFetchTaskPool[taskId]
         )
             return;
-        // console.log('fetchMidjourneyStatus enter', botMessage, extAttr)
+         console.log('fetchMidjourneyStatus enter', botMessage, extAttr)
         ChatFetchTaskPool[taskId] = setTimeout(async () => {
             ChatFetchTaskPool[taskId] = null;
             const statusRes = await fetch(
@@ -822,6 +802,7 @@ export const useChatStore = createPersistStore(
                 },
             );
             const statusResJson = await statusRes.json();
+            console.log(statusResJson)
             if (statusRes.status < 200 || statusRes.status >= 300) {
                 botMessage.content =
                     Locale.Midjourney.TaskStatusFetchFail +
@@ -910,6 +891,7 @@ export const useChatStore = createPersistStore(
             }
         }, 3000);
     },
+    
     };
 
     return methods;
@@ -917,7 +899,7 @@ export const useChatStore = createPersistStore(
   {
     name: StoreKey.Chat,
     version: 3.1,
-    migrate(persistedState, version) {
+    migrate(persistedState: unknown, version: number) {
       const state = persistedState as any;
       const newState = JSON.parse(
         JSON.stringify(state),
