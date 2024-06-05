@@ -290,6 +290,8 @@ export class ChatGPTApi implements LLMApi {
       options.onError?.(e as Error);
     }
   }
+  //openai的查询接口
+  /*
   async usage() {
     const formatDate = (d: Date) =>
       `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, "0")}-${d
@@ -355,7 +357,55 @@ export class ChatGPTApi implements LLMApi {
       total: total.hard_limit_usd,
     } as LLMUsage;
   }
+*/
+//openrouter的查询方式
+async usage() {
+  const [used] = await Promise.all([
+    fetch(
+      this.path(
+        `${OpenaiPath.OpenRouterUsagePath}`,
+      ),
+      {
+        method: "GET",
+        headers: getHeaders(),
+      },
+    )
+  ]);
 
+  if (used.status === 401) {
+    throw new Error(Locale.Error.Unauthorized);
+  }
+
+
+  const response = (await used.json()) as {
+    data:{
+      usage?: number;
+      limit?: number;
+    }
+
+    // error?: {
+    //   type: string;
+    //   message: string;
+    // };
+  };
+
+  // if (response.error && response.error.type) {
+  //   throw Error(response.error.message);
+  // }
+
+  if (response.data.usage) {
+    response.data.usage = Math.round(response.data.usage);
+  }
+
+  if (response.data.limit) {
+    response.data.limit = Math.round(response.data.limit);
+  }
+
+  return {
+    used: response.data.usage,
+    total: response.data.limit,
+  } as LLMUsage;
+}
   async models(): Promise<LLMModel[]> {
     if (this.disableListModels) {
       return DEFAULT_MODELS.slice();

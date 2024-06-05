@@ -95,6 +95,7 @@ export const OpenaiPath = {
   UsagePath: "dashboard/billing/usage",
   SubsPath: "dashboard/billing/subscription",
   ListModelPath: "v1/models",
+  OpenRouterUsagePath:'v1/auth/key',
 };
 
 export const Azure = {
@@ -171,12 +172,13 @@ const anthropicModels = [
 
 const openrouterModels=[
   "google/gemma-7b-it:free",
+  "deepseek/deepseek-chat",
   // "google/gemini-pro",
   "openai/gpt-3.5-turbo",
-  // "openai/gpt-4-turbo-preview",
+  "openai/gpt-4o",
+  "openai/gpt-4-turbo-preview",
   // "mistralai/mixtral-8x22b",
-  // "openai/gpt-4o",
-  "deepseek/deepseek-chat"
+  
 
 ]
 
